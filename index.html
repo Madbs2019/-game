@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>张凯森的旮旯game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+
+        .game-container {
+            width: 800px;
+            height: 600px;
+            margin: 50px auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 3px solid #333;
+            background: url('2.png') no-repeat center center;
+            background-size: cover;
+        }
+
+        .character-area {
+            position: absolute;
+            bottom: 0;
+            left: 50px;
+            width: 200px;
+            height: 350px;
+        }
+        .character-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            image-rendering: pixelated;
+        }
+
+        .chat-window {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 500px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.9);
+            border-top-left-radius: 12px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            padding-right: 5px;
+        }
+        .message {
+            margin-bottom: 8px;
+            padding: 6px 10px;
+            border-radius: 8px;
+            max-width: 85%;
+            line-height: 1.4;
+        }
+        .message.character {
+            background: #e3f2fd;
+            align-self: flex-start;
+        }
+        .message.user {
+            background: #c8e6c9;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .option-btn {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 6px;
+            background: #64b5f6;
+            color: white;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 14px;
+        }
+        .option-btn:hover {
+            background: #42a5f5;
+        }
+
+        .character-name {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 28px;
+            color: white;
+            text-shadow: 0 0 8px rgba(0,0,0,0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="character-name">张凯森</div>
+
+        <div class="character-area">
+            <img src="1.png" alt="张凯森" class="character-img">
+        </div>
+
+        <div class="chat-window">
+            <div class="chat-messages" id="chatMessages">
+                <div class="message character">今天想跟我聊点黄的不？</div>
+            </div>
+            <div class="options" id="options">
+                <button class="option-btn" onclick="sendMessage('今天天气不错啊')">聊点正常的</button>
+                <button class="option-btn" onclick="sendMessage('你最近有啥猎奇发现？')">整点抽象的</button>
+                <button class="option-btn" onclick="sendMessage('讲个黄段子听听')">来个带颜色的</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const responses = {
+            '今天天气不错啊': [
+                "亚麻得",
+                "🥵",
+                "别聊天气了，聊点让人脸红心跳的****"
+            ],
+            '你最近有啥猎奇发现？': [
+                "我是gay",
+                "观看洋葱新闻",
+                "我研究出了新的艹逼艺术，要不要给你表演个现场艹逼？"
+            ],
+            '讲个***': [
+                "我艹所有人人",
+                "🥵🥵🥵🥵🥵🥵",
+                "射满了"
+            ]
+        };
+
+        function sendMessage(userInput) {
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML += `<div class="message user">${userInput}</div>`;
+            
+            const possibleResponses = responses[userInput] || ["你个傻逼"];
+            const randomReply = possibleResponses[Math.floor(Math.random() * possibleResponses.length)];
+            
+            setTimeout(() => {
+                chatMessages.innerHTML += `<div class="message character">${randomReply}</div>`;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 800);
+        }
+    </script>
+</body>
+</html>
